@@ -1,0 +1,19 @@
+{
+  "name": "Adam Szwaba",
+  "short_name": "adamszwaba",
+  "description": "Stubborn developer",
+  "icons": [
+    {
+      "src": "/static/favicons/favicon.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ],
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "display": "standalone",
+  "dir": "ltr",
+  "lang": "en-US",
+  "orientation": "portrait-primary",
+  "start_url": "../../index.html"
+}

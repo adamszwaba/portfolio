@@ -4,7 +4,8 @@
     "paths": {
       "components/*": ["src/components/*"],
       "styles/*": ["styles/*"],
-      "posts": ["posts.json"]
+      "posts": ["posts.json"],
+      "assets/*": ["public/*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -20,6 +21,6 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/MDXComponents.jsx"],
   "exclude": ["node_modules"]
 }
