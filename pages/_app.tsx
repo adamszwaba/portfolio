@@ -1,16 +1,16 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import '../styles/globals.scss';
+import 'styles/globals.scss';
+import * as React from 'react';
 import type { AppProps } from 'next/app';
-import TopNav from 'src/components/topnav';
+import TopNav from 'components/topnav';
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
-    <div className="container">
+    <>
       <TopNav />
-      <main>
+      <main className="container">
         <Component {...pageProps} />
       </main>
-    </div>
+    </>
   );
 }
 

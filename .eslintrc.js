@@ -5,13 +5,17 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:prettier/recommended',
   ],
+  plugins: ['react', 'prettier', 'plugin:react/recommended'],
   env: {
     browser: true,
     es6: true,
   },
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
+  rules: {
+    'prettier/prettier': 'error',
+    'react/react-in-jsx-scope': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'react/prop-types': 'off',
+    'jsx-a11y/anchor-is-valid': 'off',
   },
   parserOptions: {
     project: './tsconfig.json',
@@ -21,6 +25,9 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
-  plugins: ['react', 'prettier'],
-  rules: { 'prettier/prettier': 'error', 'react/react-in-jsx-scope': 'off' },
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+    React: 'writable',
+  },
 };

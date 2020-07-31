@@ -1,6 +1,25 @@
-const withMDX = require('@next/mdx')({
-  extension: /\.mdx?$/,
+const withPlugins = require('next-compose-plugins');
+const remarkCodeTitles = require('remark-code-titles');
+const remarkSlug = require('remark-slug');
+const mdxPrism = require('mdx-prism');
+const autolinkHeadings = require('remark-autolink-headings');
+
+const mdx = require('next-mdx-enhanced')({
+  defaultLayout: true,
+  fileExtensions: ['mdx', 'md'],
+  remarkPlugins: [remarkCodeTitles, remarkSlug, autolinkHeadings],
+  rehypePlugins: [mdxPrism],
 });
-module.exports = withMDX({
-  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
-});
+
+const nextConfig = {
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'mdx', 'md'],
+  webpack(config, options) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    });
+    return config;
+  },
+};
+
+module.exports = withPlugins([mdx], nextConfig);
