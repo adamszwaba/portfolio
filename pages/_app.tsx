@@ -6,7 +6,7 @@ import { AppProps } from 'next/app';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import TopNav from 'components/TopNav';
+import AppBar from 'components/AppBar';
 import SEO from '../next-seo.config';
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
@@ -41,7 +41,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
         <DefaultSeo {...SEO} />
 
         <CssBaseline />
-        <TopNav />
+        <AppBar />
         <Container maxWidth="md" component="main">
           <Component {...pageProps} />
         </Container>
