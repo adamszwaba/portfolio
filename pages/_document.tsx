@@ -10,7 +10,7 @@ class MyDocument extends Document {
           <meta content="IE=edge" httpEquiv="X-UA-Compatible" />
           <meta content="width=device-width, initial-scale=1" name="viewport" />
           <link href="/static/favicons/favicon.ico" rel="shortcut icon" />
-          <link href="/static/favicons/site.webmanifest" rel="manifest" />
+          <link href="/static/site.webmanifest" rel="manifest" />
           {/* <link
             href="/static/favicons/apple-touch-icon.png"
             rel="apple-touch-icon"
@@ -22,7 +22,7 @@ class MyDocument extends Document {
             sizes="32x32"
             type="image/png"
           /> */}
-          <link href="/static/favicons/favicon.png" rel="icon" type="image/png" />
+          <link href="/static/favicons/favicon.ico" rel="icon" type="image/ico" />
         </Head>
         <body>
           <Main />

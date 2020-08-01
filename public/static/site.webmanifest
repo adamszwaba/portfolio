@@ -4,9 +4,9 @@
   "description": "Stubborn developer",
   "icons": [
     {
-      "src": "/static/favicons/favicon.png",
+      "src": "/static/favicons/favicon.ico",
       "sizes": "256x256",
-      "type": "image/png"
+      "type": "image/ico"
     }
   ],
   "background_color": "#ffffff",

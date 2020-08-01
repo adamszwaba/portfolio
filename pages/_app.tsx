@@ -1,9 +1,10 @@
-import '../styles/codeHighlighting.scss';
+import '../styles/general.scss';
 import * as React from 'react';
 import { DefaultSeo } from 'next-seo';
 // import { MDXProvider } from '@mdx-js/react';
 import { AppProps } from 'next/app';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import green from '@material-ui/core/colors/green';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import AppBar from 'components/AppBar';
@@ -20,18 +21,19 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const theme = createMuiTheme({
     palette: {
       primary: {
-        main: '#000000',
+        main: '#0366d6',
       },
-      secondary: {
-        main: '#ffffff',
-      },
+      secondary: green,
     },
     props: {
-      // Name of the component
-      MuiButtonBase: {
-        // The properties to apply
-        disableRipple: true, // No more ripple, on the whole application!
+      MuiAppBar: {
+        position: 'static',
+        color: 'inherit',
       },
+      MuiLink: {
+        color: 'inherit',
+      },
+      // Name of the component
     },
   });
   return (
