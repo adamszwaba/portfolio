@@ -22,6 +22,10 @@ class MyDocument extends Document {
             sizes="32x32"
             type="image/png"
           /> */}
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          />
           <link href="/static/favicons/favicon.ico" rel="icon" type="image/ico" />
         </Head>
         <body>

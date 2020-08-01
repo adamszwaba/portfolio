@@ -1,14 +1,11 @@
 code:not([class*='language-']) {
-  color: #eee;
-  font-family: Roboto Mono, monospace;
-  font-size: 1rem;
-  line-height: 1rem;
-  tab-size: 4;
-  border-radius: 8px;
-  padding: 0 0.5rem;
-  background: #263238;
+  // color: #eee;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  padding: 0.2em 0.4em;
+  font-size: 85%;
+  border-radius: 6px;
+  background: #1b1f230d;
 }
-
 code[class*='language-'],
 pre[class*='language-'] {
   text-align: left;
