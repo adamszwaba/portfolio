@@ -16,7 +16,7 @@ declare module '*.mdx' {
 
   export const frontMatter: {
     title: string;
-    snippet: string;
+    description: string;
     timestamp: number;
     __resourcePath: string;
     // type additional properties according to

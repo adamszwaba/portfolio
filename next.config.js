@@ -2,12 +2,11 @@ const withPlugins = require('next-compose-plugins');
 const remarkCodeTitles = require('remark-code-titles');
 const remarkSlug = require('remark-slug');
 const mdxPrism = require('mdx-prism');
-const autolinkHeadings = require('remark-autolink-headings');
 
 const mdx = require('next-mdx-enhanced')({
   defaultLayout: true,
   fileExtensions: ['mdx', 'md'],
-  remarkPlugins: [remarkCodeTitles, remarkSlug, autolinkHeadings],
+  remarkPlugins: [remarkCodeTitles, remarkSlug],
   rehypePlugins: [mdxPrism],
 });
 

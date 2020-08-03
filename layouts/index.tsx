@@ -3,13 +3,13 @@ import { NextSeo } from 'next-seo';
 
 type FrontMatter = {
   title: string;
-  snippet: string;
+  description: string;
 };
 
-const Layout = ({ title, snippet }: FrontMatter) => ({ children }: { children: ReactNode }) => (
+const Layout = ({ title, description }: FrontMatter) => ({ children }: { children: ReactNode }) => (
   <>
-    <NextSeo title={title} description={snippet} />
-    <section>{children}</section>
+    <NextSeo title={title} description={description} />
+    <article>{children}</article>
   </>
 );
 

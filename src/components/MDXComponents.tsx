@@ -151,7 +151,6 @@ const MDXComponents: MDXProviderComponents = {
   h6: (props) => <CustomHeader variant="h6" {...props} />,
   kbd: (props: any) => <Kbd {...props} />,
   a: CustomLink,
-  // p: (props) => <Typography variant="body1" component="p" {...props} />,
   img: (props) => <CustomImage {...props} />,
 };
 
