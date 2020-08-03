@@ -19,7 +19,6 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
       jssStyles.parentElement!.removeChild(jssStyles);
     }
   }, []);
-
   return (
     <ThemeProvider theme={theme}>
       <MDXProvider components={MDXComponents}>

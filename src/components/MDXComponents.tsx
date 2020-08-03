@@ -1,19 +1,86 @@
-import { Typography, Chip, Link, makeStyles, Theme, createStyles } from '@material-ui/core';
+import {
+  Typography,
+  Chip,
+  Link,
+  makeStyles,
+  Theme,
+  createStyles,
+  withTheme,
+  withStyles,
+} from '@material-ui/core';
 import { MDXProviderComponents } from '@mdx-js/react';
 import NextLink from 'next/link';
+import theme from 'styles/theme';
 
-const useKeyboardStyles = makeStyles((theme: Theme) => createStyles({}));
+const useKeyboardStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      backgroundColor: 'transparent',
+      boxShadow: `inset 0 -1px 0 ${theme.palette.grey[400]}`,
+      borderRadius: `${theme.spacing(0.75)}px`,
+      padding: `${theme.spacing(3 / 8)}px ${theme.spacing(5 / 8)}px`,
+      border: `1px solid ${theme.palette.grey[400]}`,
+      lineHeight: `${theme.spacing(10 / 8)}px`,
+      fontSize: `11px`,
+      '.MuiChip-labelSmall': {
+        backgroundColor: 'red',
+      },
+    },
+  }),
+);
 
+const CustomChip = withTheme(
+  withStyles((theme) => {
+    return {
+      root: {
+        backgroundColor: 'transparent',
+        boxShadow: `inset 0 -1px 0 ${theme.palette.grey[400]}`,
+        borderRadius: `${theme.spacing(0.75)}px`,
+        padding: `${theme.spacing(3 / 8)}px ${theme.spacing(5 / 8)}px`,
+        border: `1px solid ${theme.palette.grey[400]}`,
+        lineHeight: `${theme.spacing(10 / 8)}px`,
+        fontSize: `11px`,
+      },
+      labelSmall: {
+        padding: 0,
+      },
+    };
+  })(Chip),
+);
 const Kbd = (props: any) => {
-  console.log(props);
-  return <Chip size="small" label={props.children}></Chip>;
+  return <CustomChip size="small" label={props.children} />;
 };
 
+const useImageStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    wrapper: {
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    image: {
+      maxWidth: '100%',
+      margin: `0 auto ${theme.spacing(1.25)}px auto`,
+      borderRadius: `${theme.spacing(1)}px`,
+    },
+    caption: {
+      fontWeight: 'lighter',
+      fontSize: '16px',
+      lineHeight: '20px',
+      color: theme.palette.grey[600],
+      textAlign: 'center',
+    },
+  }),
+);
 const CustomImage = (props: any) => {
+  const classes = useImageStyles();
   return (
-    <div>
-      <img src={props.src} alt={props.alt} />
-    </div>
+    <span className={classes.wrapper}>
+      <img src={props.src} alt={props.alt} className={classes.image} />
+      <Typography variant="h5" className={classes.caption} component="span">
+        {props.alt}
+      </Typography>
+    </span>
   );
 };
 
@@ -32,44 +99,42 @@ const CustomLink = (props: any) => {
   return <Link {...props} />;
 };
 
+const useHeaderStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      scrollMarginTop: '100px',
+      scrollSnapMargin: '100px', // Safari
+      // '&[id]': {
+      //   pointerEvents: 'none',
+      // },
+      '&[id]:before': {
+        display: 'block',
+        height: ' 6rem',
+        marginTop: '-6rem',
+        visibility: 'hidden',
+        content: `""`,
+      },
+      '&[id]:hover a': { opacity: 1 },
+    },
+    anchor: {
+      fontWeight: 'normal',
+      marginLeft: '0.375rem',
+      opacity: '0',
+      '&:focus': {
+        opacity: 1,
+        boxShadow: 'outline',
+      },
+    },
+  }),
+);
+
 const CustomHeader = (props: any) => {
+  const classes = useHeaderStyles();
   return (
-    <Typography
-      variant={props.variant}
-      // css={{
-      //   scrollMarginTop: '100px',
-      //   scrollSnapMargin: '100px', // Safari
-      //   '&[id]': {
-      //     pointerEvents: 'none',
-      //   },
-      //   '&[id]:before': {
-      //     display: 'block',
-      //     height: ' 6rem',
-      //     marginTop: '-6rem',
-      //     visibility: 'hidden',
-      //     content: `""`,
-      //   },
-      //   '&[id]:hover a': { opacity: 1 },
-      // }}
-      {...props}
-      // mb="1em"
-      // mt="2em"
-    >
+    <Typography className={classes.root} variant={props.variant} {...props}>
       {props.children}
       {props.id && (
-        <Link
-          color="primary"
-          aria-label="anchor"
-          // fontWeight="normal"
-          // outline="none"
-          // _focus={{
-          //   opacity: 1,
-          //   boxShadow: 'outline',
-          // }}
-          // opacity="0"
-          // ml="0.375rem"
-          href={`#${props.id}`}
-        >
+        <Link className={classes.anchor} color="primary" aria-label="anchor" href={`#${props.id}`}>
           #
         </Link>
       )}
