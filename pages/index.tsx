@@ -1,6 +1,6 @@
 import NextLink from 'next/link';
 import { frontMatter as blogPosts } from './**/*.mdx';
-import { Link } from '@material-ui/core';
+// import { Link } from '@material-ui/core';
 
 export default function Home() {
   return (
@@ -11,7 +11,7 @@ export default function Home() {
           const slug = post.__resourcePath.replace('.mdx', '');
           return (
             <NextLink key={post.timestamp} passHref href={`/${slug}`}>
-              <Link> {post.title}</Link>
+              <a> {post.title}</a>
             </NextLink>
           );
         })
