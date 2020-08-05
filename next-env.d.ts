@@ -18,6 +18,9 @@ declare module '*.mdx' {
     title: string;
     description: string;
     timestamp: number;
+    image: string;
+    alt: string;
+    caption: string;
     __resourcePath: string;
     // type additional properties according to
     // the front-matter you define
