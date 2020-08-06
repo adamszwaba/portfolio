@@ -1,4 +1,4 @@
-const url = 'https://somefinalurl.com';
+const url = 'https://adamszwaba.com';
 const title = 'Adam Szwaba - developer, kind of a person';
 const description = 'Front-end developer, Next enthusiast and well, him.';
 

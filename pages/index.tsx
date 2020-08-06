@@ -1,5 +1,5 @@
 import NextLink from 'next/link';
-import { frontMatter as blogPosts } from './**/*.mdx';
+import { frontMatter as blogPosts } from './blog/**/*.mdx';
 import { Link } from '@material-ui/core';
 
 export default function Home() {

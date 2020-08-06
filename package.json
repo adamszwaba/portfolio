@@ -1,5 +1,10 @@
 {
-  "name": "blog",
+  "name": "portfolio",
+  "author": {
+    "name": "Adam Szwaba",
+    "email": "szwaba.adam@gmail.com",
+    "url": "https://adamszwaba.com"
+  },
   "version": "0.1.0",
   "private": true,
   "scripts": {
