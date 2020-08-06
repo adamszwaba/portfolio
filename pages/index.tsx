@@ -10,7 +10,7 @@ export default function Home() {
         blogPosts.map((post) => {
           const slug = post.__resourcePath.replace('.mdx', '');
           return (
-            <NextLink key={post.timestamp} passHref href={`/${slug}`}>
+            <NextLink key={post.timestamp} passHref href={`/blog/${slug}`}>
               <Link> {post.title}</Link>
             </NextLink>
           );
