@@ -32,13 +32,13 @@
     "@types/react": "^16.9.43",
     "@typescript-eslint/eslint-plugin": "^3.7.1",
     "babel-plugin-import-glob-array": "^0.2.0",
-    "eslint-config-airbnb-typescript": "^9.0.0",
+    "eslint": "^7.5.0",
     "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-airbnb-typescript": "^9.0.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-react-hooks": "^4.0.8",
     "eslint-plugin-react": "^7.20.5",
-    "eslint": "^7.5.0",
+    "eslint-plugin-react-hooks": "^4.0.8",
     "mdx-prism": "^0.3.1",
     "next-compose-plugins": "^2.2.0",
     "next-mdx-enhanced": "^3.1.0",
@@ -47,5 +47,8 @@
     "remark-slug": "^6.0.0",
     "sass": "^1.26.10",
     "typescript": "^3.9.7"
+  },
+  "resolutions": {
+    "*/**/prismjs": "^1.21.0"
   }
 }
