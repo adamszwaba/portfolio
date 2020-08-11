@@ -30,7 +30,7 @@ class MyDocument extends Document {
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css"
           />
-          {/* <link href="/static/favicons/favicon.ico" rel="icon" type="image/ico" /> */}
+          <link href="/static/favicons/favicon.ico" rel="icon" type="image/ico" />
         </Head>
         <body>
           <Main />
