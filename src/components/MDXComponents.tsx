@@ -1,156 +1,134 @@
 import {
-  Typography,
-  Chip,
-  Link,
-  makeStyles,
-  Theme,
-  createStyles,
-  withTheme,
-  withStyles,
-} from '@material-ui/core';
+  Alert,
+  As,
+  Box,
+  chakra,
+  ChakraProps,
+  Flex,
+  HTMLChakraProps,
+  Image,
+  Kbd,
+  OmitCommonProps,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { MDXProviderComponents } from '@mdx-js/react';
-import NextLink from 'next/link';
-import theme from 'styles/theme';
 
-const useKeyboardStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      backgroundColor: 'transparent',
-      boxShadow: `inset 0 -1px 0 ${theme.palette.grey[400]}`,
-      borderRadius: `${theme.spacing(0.75)}px`,
-      padding: `${theme.spacing(3 / 8)}px ${theme.spacing(5 / 8)}px`,
-      border: `1px solid ${theme.palette.grey[400]}`,
-      lineHeight: `${theme.spacing(10 / 8)}px`,
-      fontSize: `11px`,
-      '.MuiChip-labelSmall': {
-        backgroundColor: 'red',
-      },
-    },
-  }),
+const Pre = (props: any) => <chakra.div my="2em" borderRadius="sm" {...props} />;
+
+const Table = (props: any) => (
+  <chakra.div overflowX="auto">
+    <chakra.table textAlign="left" mt="32px" width="full" {...props} />
+  </chakra.div>
 );
 
-const CustomChip = withTheme(
-  withStyles((theme) => {
-    return {
-      root: {
-        backgroundColor: 'transparent',
-        boxShadow: `inset 0 -1px 0 ${theme.palette.grey[400]}`,
-        borderRadius: `${theme.spacing(0.75)}px`,
-        padding: `${theme.spacing(3 / 8)}px ${theme.spacing(5 / 8)}px`,
-        border: `1px solid ${theme.palette.grey[400]}`,
-        lineHeight: `${theme.spacing(10 / 8)}px`,
-        fontSize: `11px`,
-      },
-      labelSmall: {
-        padding: 0,
-      },
-    };
-  })(Chip),
-);
-const Kbd = (props: any) => {
-  return <CustomChip size="small" label={props.children} />;
-};
-
-const useImageStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    wrapper: {
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-    },
-    image: {
-      maxWidth: '100%',
-      margin: `0 auto ${theme.spacing(1.25)}px auto`,
-      borderRadius: `${theme.spacing(1)}px`,
-    },
-    caption: {
-      fontWeight: 'lighter',
-      fontSize: '16px',
-      lineHeight: '20px',
-      color: theme.palette.grey[600],
-      textAlign: 'center',
-    },
-  }),
+const THead = (props: any) => (
+  <chakra.th
+    bg={useColorModeValue('gray.50', 'whiteAlpha.100')}
+    fontWeight="semibold"
+    p={2}
+    fontSize="sm"
+    {...props}
+  />
 );
 const CustomImage = (props: any) => {
-  const classes = useImageStyles();
   return (
-    <span className={classes.wrapper}>
-      <img src={props.src} alt={props.alt} className={classes.image} />
-      <Typography variant="h5" className={classes.caption} component="span">
+    <Flex as="span" width="100%" flexDirection="column">
+      <Image
+        src={props.src}
+        alt={props.alt}
+        maxWidth="100%"
+        margin={[0, 'auto', '1.5', 'auto']}
+        borderRadius="base"
+      />
+      <Text variant="h5" textAlign="center" component="span" fontWeight="light">
         {props.alt}
-      </Typography>
-    </span>
+      </Text>
+    </Flex>
   );
 };
 
-const CustomLink = (props: any) => {
-  const href = props.href;
-  const isInternalLink = href && (href.startsWith('/') || href.startsWith('#'));
-
-  if (isInternalLink) {
-    return (
-      <NextLink href={href} passHref>
-        <Link {...props} />
-      </NextLink>
-    );
-  }
-
-  return <Link {...props} />;
-};
-
-const useHeaderStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      scrollMarginTop: '100px',
-      scrollSnapMargin: '100px', // Safari
-      // '&[id]': {
-      //   pointerEvents: 'none',
-      // },
-      '&[id]:before': {
-        display: 'block',
-        height: ' 6rem',
-        marginTop: '-6rem',
-        visibility: 'hidden',
-        content: `""`,
-      },
-      '&[id]:hover a': { opacity: 1 },
-    },
-    anchor: {
-      fontWeight: 'normal',
-      marginLeft: '0.375rem',
-      opacity: '0',
-      '&:focus': {
-        opacity: 1,
-        boxShadow: 'outline',
-      },
-    },
-  }),
+const TData = (
+  props: JSX.IntrinsicAttributes &
+    OmitCommonProps<
+      React.DetailedHTMLProps<
+        React.TdHTMLAttributes<HTMLTableDataCellElement>,
+        HTMLTableDataCellElement
+      >,
+      keyof ChakraProps
+    > &
+    ChakraProps &
+    OmitCommonProps<any, keyof ChakraProps> & { as?: As<any> | undefined },
+) => (
+  <chakra.td
+    p={2}
+    borderTopWidth="1px"
+    borderColor="inherit"
+    fontSize="sm"
+    whiteSpace="normal"
+    {...props}
+  />
 );
 
-const CustomHeader = (props: any) => {
-  const classes = useHeaderStyles();
-  return (
-    <Typography className={classes.root} variant={props.variant} {...props}>
-      {props.children}
-      {props.id && (
-        <Link className={classes.anchor} color="primary" aria-label="anchor" href={`#${props.id}`}>
-          #
-        </Link>
-      )}
-    </Typography>
-  );
-};
+const LinkedHeading = (props: HTMLChakraProps<'h2'>) => (
+  <chakra.h2 data-group="" css={{ scrollMarginBlock: '6.875rem' }} {...props}>
+    <span className="content">{props.children}</span>
+    {props.id && (
+      <chakra.a
+        aria-label="anchor"
+        color="teal.500"
+        fontWeight="normal"
+        outline="none"
+        _focus={{ opacity: 1, boxShadow: 'outline' }}
+        opacity={0}
+        _groupHover={{ opacity: 1 }}
+        ml="0.375rem"
+        href={`#${props.id}`}
+      >
+        #
+      </chakra.a>
+    )}
+  </chakra.h2>
+);
+
+const InlineCode = (props: any) => (
+  <chakra.code apply="mdx.code" color={useColorModeValue('purple.500', 'purple.200')} {...props} />
+);
 
 const MDXComponents: MDXProviderComponents = {
-  h1: (props) => <CustomHeader variant="h1" component="h1" my={4} {...props} />,
-  h2: (props) => <CustomHeader variant="h2" {...props} />,
-  h3: (props) => <CustomHeader variant="h3" {...props} />,
-  h4: (props) => <CustomHeader variant="h4" {...props} />,
-  h5: (props) => <CustomHeader variant="h5" {...props} />,
-  h6: (props) => <CustomHeader variant="h6" {...props} />,
-  kbd: (props: any) => <Kbd {...props} />,
-  a: CustomLink,
+  h1: (props: any) => <chakra.h1 apply="mdx.h1" {...props} />,
+  h2: (props: any) => <LinkedHeading apply="mdx.h2" {...props} />,
+  h3: (props: any) => <LinkedHeading as="h3" apply="mdx.h3" {...props} />,
+  h4: (props: any) => <LinkedHeading as="h4" apply="mdx.h4" {...props} />,
+  hr: (props: any) => <chakra.hr apply="mdx.hr" {...props} />,
+  strong: (props: any) => <Box as="strong" fontWeight="semibold" {...props} />,
+  inlineCode: InlineCode,
+  pre: Pre,
+  kbd: Kbd,
+  // @ts-ignore
+  br: ({ reset, ...props }) => (
+    <Box as={reset ? 'br' : undefined} height={reset ? undefined : '24px'} {...props} />
+  ),
+  table: Table,
+  th: THead,
+  td: TData,
+  a: (props: any) => <chakra.a apply="mdx.a" {...props} />,
+  p: (props: any) => <chakra.p apply="mdx.p" {...props} />,
+  ul: (props: any) => <chakra.ul apply="mdx.ul" {...props} />,
+  ol: (props: any) => <chakra.ol apply="mdx.ul" {...props} />,
+  li: (props: any) => <chakra.li pb="4px" {...props} />,
+  blockquote: (props: any) => (
+    <Alert
+      mt="4"
+      role="none"
+      status="warning"
+      variant="left-accent"
+      as="blockquote"
+      rounded="4px"
+      my="1.5rem"
+      {...props}
+    />
+  ),
   img: (props) => <CustomImage {...props} />,
 };
 
