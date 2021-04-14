@@ -14,6 +14,8 @@ import {
   Theme,
   SvgIcon,
   Button,
+  PaletteType,
+  Switch,
 } from '@material-ui/core';
 import { yellow } from '@material-ui/core/colors';
 
@@ -50,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const AppBar: React.FC = () => {
+const AppBar: React.FC = ({ children }) => {
   const classes = useStyles();
   return (
     <MuiAppBar>
@@ -80,9 +82,7 @@ const AppBar: React.FC = () => {
           >
             Source
           </Button>
-          <Button className={classes.useoLink} component="a" href="https://useo.pl">
-            USEO
-          </Button>
+          {children}
         </div>
       </Container>
     </MuiAppBar>

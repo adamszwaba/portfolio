@@ -1,14 +1,6 @@
 /// <reference types="next" />
 /// <reference types="next/types/global" />
-declare module '*.md' {
-  const MDXComponent: (props: any) => JSX.Element;
-  export default MDXComponent;
-}
-declare module '*.mdx' {
-  const MDXComponent: (props: any) => JSX.Element;
-  export default MDXComponent;
-}
-
+/// <reference types="@mdx-js/loader" />
 declare module '*.svg';
 
 declare module '*.mdx' {
