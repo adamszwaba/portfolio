@@ -1,8 +1,6 @@
 import { GetStaticProps } from 'next';
-import fs from 'fs';
-import path from 'path';
-import { Card, CardActions, CardContent, CardHeader, CardMedia, Link } from '@material-ui/core';
 import NextLink from 'next/link';
+import { Box, Heading, Text, Link, Grid, GridItem } from '@chakra-ui/react';
 
 type ArticleMetaData = {
   title: string;
@@ -18,19 +16,69 @@ type IStaticProps = {
 };
 
 export default function Home({ blogPosts }: IStaticProps) {
-  return Object.values(blogPosts).map((yearData) =>
-    yearData.map((post) => (
-      <Card>
-        <CardMedia image={post.thumbnail}></CardMedia>
-        <CardHeader title={post.title}></CardHeader>
-        <CardContent>{post.excerpt}</CardContent>
-        <CardActions>
-          <NextLink href={`/blog/${post.slug}`} passHref>
-            <Link>Read the article</Link>
-          </NextLink>
-        </CardActions>
-      </Card>
-    )),
+  return (
+    <Grid gridTemplateColumns="repeat(5, 1fr)" templateRows="repeat(auto, 1fr)" gap={10}>
+      {Object.values(blogPosts).map((yearData) =>
+        yearData.map((post) => (
+          <>
+            <GridItem colspan={2} rowSpan={2}>
+              <Box>
+                <Box width="100%" pt="56.5%" backgroundImage={`url(${post.thumbnail})`}></Box>
+                <Box p={[2, 4]}>
+                  <Heading variant="h1">{post.title}</Heading>
+                  <Text noOfLines={4}>{post.excerpt}</Text>
+                  <Box mt="4">
+                    <NextLink href={`/blog/${post.slug}`} passHref>
+                      <Link>Read the article</Link>
+                    </NextLink>
+                  </Box>
+                </Box>
+              </Box>
+            </GridItem>
+            <GridItem>
+              <Box maxWidth="96">
+                <Box width="100%" pt="56.5%" backgroundImage={`url(${post.thumbnail})`}></Box>
+                <Box p={[2, 4]}>
+                  <Heading variant="h1">{post.title}</Heading>
+                  <Text noOfLines={4}>{post.excerpt}</Text>
+                  <Box mt="4">
+                    <NextLink href={`/blog/${post.slug}`} passHref>
+                      <Link>Read the article</Link>
+                    </NextLink>
+                  </Box>
+                </Box>
+              </Box>
+            </GridItem>
+            <GridItem>
+              <Box maxWidth="96">
+                <Box width="100%" pt="56.5%" backgroundImage={`url(${post.thumbnail})`}></Box>
+                <Box p={[2, 4]}>
+                  <Heading variant="h1">{post.title}</Heading>
+                  <Text noOfLines={4}>{post.excerpt}</Text>
+                  <Box mt="4">
+                    <NextLink href={`/blog/${post.slug}`} passHref>
+                      <Link>Read the article</Link>
+                    </NextLink>
+                  </Box>
+                </Box>
+              </Box>
+              <Box maxWidth="96">
+                <Box width="100%" pt="56.5%" backgroundImage={`url(${post.thumbnail})`}></Box>
+                <Box p={[2, 4]}>
+                  <Heading variant="h1">{post.title}</Heading>
+                  <Text noOfLines={4}>{post.excerpt}</Text>
+                  <Box mt="4">
+                    <NextLink href={`/blog/${post.slug}`} passHref>
+                      <Link>Read the article</Link>
+                    </NextLink>
+                  </Box>
+                </Box>
+              </Box>
+            </GridItem>
+          </>
+        )),
+      )}
+    </Grid>
   );
 }
 

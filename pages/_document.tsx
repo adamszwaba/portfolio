@@ -1,8 +1,11 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document';
-import React from 'react';
-import { ServerStyleSheets } from '@material-ui/core/styles';
+import NextDocument, { DocumentContext, Head, Html, Main, NextScript } from 'next/document';
+import { ColorModeScript } from '@chakra-ui/react';
 
-class MyDocument extends Document {
+class Document extends NextDocument {
+  static getInitialProps(ctx: DocumentContext) {
+    return NextDocument.getInitialProps(ctx);
+  }
+
   render() {
     return (
       <Html lang="en">
@@ -11,24 +14,16 @@ class MyDocument extends Document {
           <meta content="width=device-width, initial-scale=1" name="viewport" />
           <link href="/static/favicons/favicon.ico" rel="shortcut icon" />
           <link href="/static/site.webmanifest" rel="manifest" />
-          {/* <link
-            href="/static/favicons/apple-touch-icon.png"
-            rel="apple-touch-icon"
-            sizes="180x180"
-          />
           <link
-            href="/static/favicons/favicon-32x32.png"
-            rel="icon"
-            sizes="32x32"
-            type="image/png"
-          /> */}
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="preload"
+            href="/fonts/Inter.woff2"
+            as="font"
+            type="font/woff2"
+            crossOrigin="anonymous"
           />
-          <link href="/static/favicons/favicon.ico" rel="icon" type="image/ico" />
         </Head>
         <body>
+          <ColorModeScript />
           <Main />
           <NextScript />
         </body>
@@ -37,45 +32,4 @@ class MyDocument extends Document {
   }
 }
 
-MyDocument.getInitialProps = async (ctx) => {
-  // Resolution order
-  //
-  // On the server:
-  // 1. app.getInitialProps
-  // 2. page.getInitialProps
-  // 3. document.getInitialProps
-  // 4. app.render
-  // 5. page.render
-  // 6. document.render
-  //
-  // On the server with error:
-  // 1. document.getInitialProps
-  // 2. app.render
-  // 3. page.render
-  // 4. document.render
-  //
-  // On the client
-  // 1. app.getInitialProps
-  // 2. page.getInitialProps
-  // 3. app.render
-  // 4. page.render
-
-  // Render app and page and get the context of the page with collected side effects.
-  const sheets = new ServerStyleSheets();
-  const originalRenderPage = ctx.renderPage;
-
-  ctx.renderPage = () =>
-    originalRenderPage({
-      enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
-    });
-
-  const initialProps = await Document.getInitialProps(ctx);
-
-  return {
-    ...initialProps,
-    // Styles fragment is rendered after the app and page rendering finish.
-    styles: [...React.Children.toArray(initialProps.styles), sheets.getStyleElement()],
-  };
-};
-
-export default MyDocument;
+export default Document;
