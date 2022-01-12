@@ -23,4 +23,7 @@ module.exports = withMDX({
     });
     return config;
   },
+  images: {
+    domains: ['picsum.photos'],
+  },
 });
