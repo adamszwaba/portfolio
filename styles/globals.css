@@ -131,3 +131,7 @@ code.hljs {
 .prose :where(pre):not(:where([class~='not-prose'] *)) {
   @apply bg-slate-50 px-2 py-1;
 }
+
+body {
+  @apply dark:bg-black dark:bg-opacity-80;
+}

@@ -4,11 +4,11 @@ import NextLink from 'next/link';
 
 const AppBar: React.FC = () => {
   return (
-    <nav className="w-full py-4">
+    <nav className="w-full py-4 shadow-md mb-1 dark:bg-black dark:bg-opacity-20">
       <div className="container flex items-center justify-between">
         <NextLink href="/" className="flex items-center">
           <Logo width={32} height={32} />
-          <span className="border-l-stone-600 border-l-[1px] ml-3 h-7 pl-3 flex-grow hover:underline">
+          <span className="border-l-stone-600 border-l-[1px] ml-3 h-7 pl-3 flex-grow hover:underline dark:invert">
             @Adam Szwaba
           </span>
         </NextLink>

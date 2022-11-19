@@ -2,12 +2,13 @@
 module.exports = {
   content: [
     './src/**/*.{js,ts,jsx,tsx}', // Note the addition of the `app` directory.
-    './pages/**/*.{js,ts,jsx,tsx}',
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {},
     container: {
+      padding: '1rem',
       center: true,
       screens: {
         sm: '640px',

@@ -41,7 +41,7 @@ const Logo = ({ ...props }: React.SVGProps<SVGSVGElement>) => {
         />
         <path
           d="M0 21.8213L42.5 44.0124L0 66.2036L-42.5 44.0124L0 21.8213Z"
-          className="fill-slate-800 dark:fill-slate-50"
+          className="fill-slate-600 dark:fill-slate-50"
         />
       </g>
     </svg>
