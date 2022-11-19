@@ -1,7 +1,6 @@
 import { GetStaticProps } from 'next';
 import NextLink from 'next/link';
 import Image from 'next/image';
-import { Box, Heading, Text, Link, Grid, GridItem } from '@chakra-ui/react';
 
 type ArticleMetaData = {
   title: string;
@@ -18,26 +17,24 @@ type IStaticProps = {
 
 export default function Home({ blogPosts }: IStaticProps) {
   return (
-    <Grid templateColumns="repeat(5, 1fr)" templateRows="repeat(auto, 1fr)" gap={10}>
+    <div className="grid grid-cols-5 gap-4">
       {Object.values(blogPosts).map((yearData) =>
         yearData.map((post) => (
-          <GridItem colSpan={5}>
-            <Box>
-              <Image src={post.thumbnail} width="300" height="200" />
-              <Box p={[2, 4]}>
-                <Heading variant="h1">{post.title}</Heading>
-                <Text noOfLines={4}>{post.excerpt}</Text>
-                <Box mt="4">
-                  <NextLink href={`/blog/${post.slug}`} passHref>
-                    <Link>Read the article</Link>
-                  </NextLink>
-                </Box>
-              </Box>
-            </Box>
-          </GridItem>
+          <div className="col-span-5">
+            <Image src={post.thumbnail} width="300" height="200" alt={post.title} />
+            <div className="px-2 py-4">
+              <h1>{post.title}</h1>
+              <p className="truncate overflow-hidden text-ellipsis whitespace-nowrap max-h-40">
+                {post.excerpt}
+              </p>
+              <NextLink href={`/blog/${post.slug}`} className="mt-4 hover:underline cursor-pointer">
+                Read the article
+              </NextLink>
+            </div>
+          </div>
         )),
       )}
-    </Grid>
+    </div>
   );
 }
 

@@ -1,135 +1,75 @@
-import {
-  Alert,
-  As,
-  Box,
-  chakra,
-  ChakraProps,
-  Flex,
-  HTMLChakraProps,
-  Image,
-  Kbd,
-  OmitCommonProps,
-  Text,
-  useColorModeValue,
-} from '@chakra-ui/react';
-import { MDXProviderComponents } from '@mdx-js/react';
+import Image from 'next/image';
+import { MDXProvider } from '@mdx-js/react';
 
-const Pre = (props: any) => <chakra.div my="2em" borderRadius="sm" {...props} />;
+const Pre = (props: any) => <pre className="my-8 rounded-sm not-prose" {...props} />;
 
 const Table = (props: any) => (
-  <chakra.div overflowX="auto">
-    <chakra.table textAlign="left" mt="32px" width="full" {...props} />
-  </chakra.div>
+  <div className="overflow-x-auto">
+    <table className="text-left mt-8 w-full" {...props} />
+  </div>
 );
 
 const THead = (props: any) => (
-  <chakra.th
-    bg={useColorModeValue('gray.50', 'whiteAlpha.100')}
+  <th
+    className="font-semibold bg-gray-50 dark:bg-slate-800 p-2 text-sm"
     fontWeight="semibold"
-    p={2}
-    fontSize="sm"
     {...props}
   />
 );
 const CustomImage = (props: any) => {
   return (
-    <Flex as="span" width="100%" flexDirection="column">
-      <Image
-        src={props.src}
-        alt={props.alt}
-        maxWidth="100%"
-        margin={[0, 'auto', '1.5', 'auto']}
-        borderRadius="base"
-      />
-      <Text variant="h5" textAlign="center" component="span" fontWeight="light">
-        {props.alt}
-      </Text>
-    </Flex>
+    <div className="w-full flex flex-column relative h-4">
+      <Image src={props.src} alt={props.alt} />
+      <span className="uppercase text-center font-light">{props.alt}</span>
+    </div>
   );
 };
 
-const TData = (
-  props: JSX.IntrinsicAttributes &
-    OmitCommonProps<
-      React.DetailedHTMLProps<
-        React.TdHTMLAttributes<HTMLTableDataCellElement>,
-        HTMLTableDataCellElement
-      >,
-      keyof ChakraProps
-    > &
-    ChakraProps &
-    OmitCommonProps<any, keyof ChakraProps> & { as?: As<any> | undefined },
-) => (
-  <chakra.td
-    p={2}
-    borderTopWidth="1px"
-    borderColor="inherit"
-    fontSize="sm"
-    whiteSpace="normal"
-    {...props}
-  />
+const TData = (props: any) => (
+  <td className="p-2 border-t-[1px] border-inherit text-sm whitespace-normal" {...props} />
 );
 
-const LinkedHeading = (props: HTMLChakraProps<'h2'>) => (
-  <chakra.h2 data-group="" css={{ scrollMarginBlock: '6.875rem' }} {...props}>
+const LinkedHeading = (props: any) => (
+  <h2 style={{ scrollMarginBlock: '6.875rem' }} {...props}>
     <span className="content">{props.children}</span>
     {props.id && (
-      <chakra.a
+      <a
+        className="text-teal-500 font-normal outline-none focus:outline-black opacity-0 hover:opacity-100 ml-1"
         aria-label="anchor"
-        color="teal.500"
-        fontWeight="normal"
-        outline="none"
-        _focus={{ opacity: 1, boxShadow: 'outline' }}
-        opacity={0}
-        _groupHover={{ opacity: 1 }}
-        ml="0.375rem"
         href={`#${props.id}`}
       >
         #
-      </chakra.a>
+      </a>
     )}
-  </chakra.h2>
+  </h2>
 );
 
 const InlineCode = (props: any) => (
-  <chakra.code apply="mdx.code" color={useColorModeValue('purple.500', 'purple.200')} {...props} />
+  <code className="text-purple-500 bg:text-purple-200" {...props} />
 );
 
-const MDXComponents: MDXProviderComponents = {
-  h1: (props: any) => <chakra.h1 apply="mdx.h1" {...props} />,
-  h2: (props: any) => <LinkedHeading apply="mdx.h2" {...props} />,
-  h3: (props: any) => <LinkedHeading as="h3" apply="mdx.h3" {...props} />,
-  h4: (props: any) => <LinkedHeading as="h4" apply="mdx.h4" {...props} />,
-  hr: (props: any) => <chakra.hr apply="mdx.hr" {...props} />,
-  strong: (props: any) => <Box as="strong" fontWeight="semibold" {...props} />,
+type MdxPropsType = React.ComponentProps<typeof MDXProvider>;
+
+const MDXProviderComponents: MdxPropsType['components'] = {
+  h1: (props: any) => <h1 className="mdx-h1" {...props} />,
+  h2: (props: any) => <h2 className="mdx-h2" {...props} />,
+  h3: (props: any) => <h3 className="mdx-h3" {...props} />,
+  h4: (props: any) => <LinkedHeading className="mdx-h4" {...props} />,
+  hr: (props: any) => <hr className="mdx-hr" {...props} />,
+  strong: (props: any) => <strong className="font-semibold" {...props} />,
   inlineCode: InlineCode,
   pre: Pre,
-  kbd: Kbd,
-  // @ts-ignore
-  br: ({ reset, ...props }) => (
-    <Box as={reset ? 'br' : undefined} height={reset ? undefined : '24px'} {...props} />
-  ),
+  br: (props) => <br {...props} />,
   table: Table,
   th: THead,
   td: TData,
-  a: (props: any) => <chakra.a apply="mdx.a" {...props} />,
-  p: (props: any) => <chakra.p apply="mdx.p" {...props} />,
-  ul: (props: any) => <chakra.ul apply="mdx.ul" {...props} />,
-  ol: (props: any) => <chakra.ol apply="mdx.ul" {...props} />,
-  li: (props: any) => <chakra.li pb="4px" {...props} />,
-  blockquote: (props: any) => (
-    <Alert
-      mt="4"
-      role="none"
-      status="warning"
-      variant="left-accent"
-      as="blockquote"
-      rounded="4px"
-      my="1.5rem"
-      {...props}
-    />
-  ),
+  a: (props: any) => <a className="mdx-a" {...props} />,
+  p: (props: any) => <p {...props} />,
+  ul: (props: any) => <ul className="mdx-ul" {...props} />,
+  ol: (props: any) => <ol className="mdx=ul" {...props} />,
+  li: (props: any) => <li className="pb-1" {...props} />,
+  blockquote: (props: any) => <blockquote className="mt-4 rounded-sm my-2" {...props} />,
   img: (props) => <CustomImage {...props} />,
 };
 
-export default MDXComponents;
+export default MDXProviderComponents;
