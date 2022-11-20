@@ -1,7 +1,6 @@
 import { GetStaticProps } from 'next';
 import NextLink from 'next/link';
 import { ArticleMetaData, getArticlesData } from 'src/features/articles/helpers';
-import CustomImage from 'components/image';
 import Image from 'next/image';
 
 type IStaticProps = {
