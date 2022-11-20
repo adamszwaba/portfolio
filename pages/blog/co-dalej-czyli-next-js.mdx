@@ -1,5 +1,9 @@
+---
+title: Hi
+---
+
 import Image from '../../src/components/image';
-import ArticleLayout from '../../src/components/article-layout';
+import ArticleLayout from '../../src/features/articles/article-layout';
 
 # Intro
 
@@ -218,3 +222,5 @@ const AppBar: React.FC = () => {
 ```
 
 > [dodać ikonkę z komentarzem]
+
+export default ({ children }) => <ArticleLayout>{children}</ArticleLayout>;
