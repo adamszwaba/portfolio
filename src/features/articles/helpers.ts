@@ -3,6 +3,8 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import { z } from 'zod';
 
+/** I'm forgetful. I'd rather zod remind me I'm missing a property
+ * than have to remember to check for it later. */
 export const articleMetaDataSchema = z.object({
   title: z.string(),
   description: z.string(),
@@ -24,7 +26,6 @@ export async function getArticlesData() {
     const greyMatter = matter(fs.readFileSync(articlesPath + '/' + path));
     const fileName = pathContent[pathContent.length - 1];
     const [slug, _extension] = fileName.split('.');
-    console.log(greyMatter);
 
     return articleMetaDataSchema.parse({ slug, ...greyMatter.data });
   });
