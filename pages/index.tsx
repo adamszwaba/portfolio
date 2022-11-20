@@ -18,7 +18,7 @@ type IStaticProps = {
 export default function Home({ blogPosts }: IStaticProps) {
   return (
     <div className="grid grid-cols-5 gap-4">
-      {Object.values(blogPosts).map((yearData) =>
+      {/* {Object.values(blogPosts).map((yearData) =>
         yearData.map((post) => (
           <div className="col-span-5">
             <Image src={post.thumbnail} width="300" height="200" alt={post.title} />
@@ -33,7 +33,7 @@ export default function Home({ blogPosts }: IStaticProps) {
             </div>
           </div>
         )),
-      )}
+      )} */}
     </div>
   );
 }

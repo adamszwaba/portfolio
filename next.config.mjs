@@ -8,6 +8,7 @@ const withMDX = nextMdx({
     extension: /\.mdx$/,
     remarkPlugins: [remarkCodeTitles],
     rehypePlugins: [rehypeHighlight, rehypeSlug],
+    providerImportSource: '@mdx-js/react',
   },
 });
 

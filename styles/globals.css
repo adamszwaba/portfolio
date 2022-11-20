@@ -2,34 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply prose dark:bg-slate-800 dark:prose-invert min-h-[100vh] bg-slate-50 max-w-none prose-a:text-teal-500 prose-a:font-semibold prose-a:transition-colors prose-a:duration-150 prose-a:ease-out prose-a:hover:text-teal-600 lg:prose-xl;
+}
+
+#__next {
+  @apply min-h-screen flex flex-col justify-start;
+}
+
 @layer utilities {
-  .mdx-h1 {
-    @apply mt-8 mb-1 leading-5 font-bold;
-  }
-  .mdx-h2 {
-    @apply mt-16 mb-2 leading-5 font-bold;
-  }
-  .mdx-h3 {
-    @apply mt-12 leading-5 font-semibold;
-  }
-  .mdx-h4 {
-    @apply mt-12 leading-5 font-semibold;
-  }
-  .mdx-a {
-    @apply text-teal-500 font-semibold transition-colors duration-150 ease-out;
-  }
-  .mdx-a:hover {
-    @apply text-teal-600;
-  }
-  .mdx-p {
-    @apply mt-5 leading-7;
-  }
-  .mdx-hr {
-    @apply my-16;
-  }
-  .mdx-blockquote {
-    @apply bg-orange-100 border-orange-200 border-[1px] rounded-lg;
-  }
   .mdx-code {
     @apply rounded-sm px-1 text-sm py-[2px] whitespace-nowrap leading-normal;
   }
@@ -130,8 +111,4 @@ code.hljs {
 
 .prose :where(pre):not(:where([class~='not-prose'] *)) {
   @apply bg-slate-50 px-2 py-1;
-}
-
-body {
-  @apply dark:bg-black dark:bg-opacity-80;
 }
