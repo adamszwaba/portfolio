@@ -65,6 +65,7 @@ const MDXProviderComponents: MdxPropsType['components'] = {
   ol: (props: any) => <ol className="mdx=ul" {...props} />,
   li: (props: any) => <li className="pb-1" {...props} />,
   blockquote: (props: any) => <blockquote className="mt-4 rounded-sm my-2" {...props} />,
+  //@ts-ignore
   img: (props) => <Image {...props} />,
 };
 
