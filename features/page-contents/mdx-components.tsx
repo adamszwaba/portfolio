@@ -1,4 +1,4 @@
-import Image from 'src/components/image';
+import Image from 'components/image';
 import { MDXProvider } from '@mdx-js/react';
 
 const Pre = (props: any) => <pre className="my-8 rounded-sm not-prose" {...props} />;
