@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from 'src/components/image';
 import { MDXProvider } from '@mdx-js/react';
 
 const Pre = (props: any) => <pre className="my-8 rounded-sm not-prose" {...props} />;
@@ -16,14 +16,6 @@ const THead = (props: any) => (
     {...props}
   />
 );
-const CustomImage = (props: any) => {
-  return (
-    <div className="w-full flex flex-column relative h-4">
-      <Image src={props.src} alt={props.alt} />
-      <span className="uppercase text-center font-light">{props.alt}</span>
-    </div>
-  );
-};
 
 const TData = (props: any) => (
   <td className="p-2 border-t-[1px] border-inherit text-sm whitespace-normal" {...props} />
@@ -73,7 +65,7 @@ const MDXProviderComponents: MdxPropsType['components'] = {
   ol: (props: any) => <ol className="mdx=ul" {...props} />,
   li: (props: any) => <li className="pb-1" {...props} />,
   blockquote: (props: any) => <blockquote className="mt-4 rounded-sm my-2" {...props} />,
-  img: (props) => <CustomImage {...props} />,
+  img: (props) => <Image {...props} />,
 };
 
 export default MDXProviderComponents;
