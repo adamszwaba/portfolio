@@ -2,6 +2,7 @@ import { GetStaticProps } from 'next';
 import NextLink from 'next/link';
 import Image from 'next/image';
 import { ArticleMetaData, getArticlesData } from 'src/features/articles/helpers';
+import CustomImage from 'components/image';
 
 type IStaticProps = {
   postsData: Array<ArticleMetaData>;
@@ -13,7 +14,7 @@ export default function Home({ postsData }: IStaticProps) {
     <div className="grid grid-cols-5 gap-4">
       {postsData.map((post) => (
         <div className="col-span-5" key={post.slug}>
-          <Image src={post.thumbnail} width="300" height="200" alt={post.title} />
+          <CustomImage displayAlt={false} src={post.thumbnail} alt={post.title} />
           <div className="px-2 py-4">
             <h1>{post.title}</h1>
             <p className="truncate overflow-hidden text-ellipsis whitespace-nowrap max-h-40">

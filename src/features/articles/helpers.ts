@@ -7,8 +7,8 @@ export const articleMetaDataSchema = z.object({
   title: z.string(),
   description: z.string(),
   slug: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.date().transform((d) => d.toISOString()),
+  updatedAt: z.date().transform((d) => d.toISOString()),
   thumbnail: z.string(),
 });
 
