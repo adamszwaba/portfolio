@@ -14,7 +14,7 @@ const AppBar: React.FC = () => {
         </NextLink>
         <NextLink
           href="https://github.com/adamszwaba/portfolio"
-          className="bg-slate-200 px-3 py-1 hover:bg-slate-300 transition-colors duration-200 rounded-md leading-6 flex items-center gap-1"
+          className="bg-slate-200 px-3 py-1 dark:bg-slate-700 dark:hover:bg-slate-600 hover:bg-slate-300 transition-colors duration-200 rounded-md leading-6 flex items-center gap-1"
         >
           <FaGithub width={24} height={24} />
           Source
