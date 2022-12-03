@@ -1,0 +1,278 @@
+---
+title: Refactoring with empathy - Part 1
+description: Refactoring more often than not is a painful process. In this article we'll have a look at how to do it right - and with empathy.
+createdAt: 2022-11-30
+updatedAt: 2022-11-30
+thumbnail: /thumbnails/refactoring-with-empathy.jpeg
+---
+
+# Refactoring with empathy, part 1: defensive services.
+
+I refactor _often_. It's not a brag - in fact, at times it's an issue when I _just can't let go_. That said, I think there are a couple of lessons we can all learn, and at the very least - I could start a discussion. And talking is good more often than not.
+
+After all, refactoring should start with a discussion. When I notice something particularly annoying and troublesome for me, and after figuring out if the issue isn't just that - _myself_ - I try to reach out to other developers in the team and talk about whether what is a problem for me, is a problem for others. Do we lose time? If so, do we want to do something about it? Do we have the time for it? Push come to shove, development is a team effort. The codebase tells as much about the technical proficiency of the team, as it does about the culture.
+
+With this in mind, I find it particularly important not to jump into solving something _I_ see as an issue. Applications are written based on the team's and particular developer's experience, which for me means that the code and patterns used in it should be treated with _empathy_ - which is an approach of understanding and accepting them, and some of the stuff that's written between the lines, so to speak.
+
+## The defensive codebase
+
+One of the projects I joined was a massive codebase consisting of multiple front and backend services. As a frontend dev, I was tasked with implementing features on the front. Features to be implemented weren't that difficult and not at all different to any other codebase - add an interaction here and there that triggers a call or two to the backend. I don't think I can recall the particulars at the moment, but one thing here was important. Part of the task was adding a completely new call to the API.
+
+And that's when trouble started.
+
+### Five for one
+
+I dove in. Read the code, started clicking around, found first example of an API call.
+
+```tsx
+// SomeComponent.tsx
+const SomeComponent = () => {
+  const fetchSpeficifData = useFetchSpecificData()
+  ...
+  return (
+    ...
+    <Button onClick={fetchSpecificData}>
+  )
+}
+```
+
+Well, okay then. Cool, there's a hook. Let's go there.
+
+```tsx
+// useFetchSpecificData.ts
+const useFetchSpecificData = () => {
+  const dispatch = useDispatch();
+  const fetch = () => {
+    dispatch(fetchSpecificDataAction());
+  };
+  return fetch;
+};
+```
+
+Dispatch, redux. Nothing new. I was aware that we're dealing with a legacy, redux-saga based codebase. No issue. Slightly worried about no loading, error, aborting etc, but considering we're dealing with redux-saga, it's nothing eye raising. The loading state is most likely in the saga itself. Let's find out.
+
+```tsx
+// store/specificStore/actions.ts
+export const FETCH_SPECIFIC_DATA_REQUESTED = 'FETCH_SPECIFIC_DATA_REQUESTED';
+export const fetchSpecificDataAction = () => ({
+  type: FETCH_SPECIFIC_DATA_REQUESTED,
+});
+
+// store/specificStore/sagas.ts
+export function* fetchSpecificDataSaga() {
+  try {
+    const data = yield call(fetchSpecificData);
+    yield put(fetchSpecificDataSuccessAction(data));
+  } catch (error) {
+    yield put(fetchSpecificDataFailureAction(error));
+  }
+}
+```
+
+Cool. At this moment, I'm starting to get a little tired just reading this, and remembering how much work implementing a whole new call was. Let's check the `fetchSpecificData` function.
+
+```tsx
+// api/specificApi/request.ts
+const validate = (response: any): SpecificData => {
+  return ajv.validate(SPECIFIC_DATA_SCHEMA_KEY, response);
+};
+
+export const fetchSpecificData = async () => {
+  return fetch('/api/specificData').then((response) => validate(response));
+};
+```
+
+Okay, we're getting defensive. Also, ajv? And there's 4 more files. In total, I found 4 more files that needed to be touched to implement a new call:
+
+```tsx
+/** api/specificApi/mocks.ts
+ * this file contained mocks for the api call itself
+*/
+export const fetchSpecificDataRequestMock = async () => {
+  return mockData: SpecificData;
+}
+export const fetchSpecificDataResposneMock = async () => {
+  return mockData: SpecificData;
+}
+/** api/specificApi/response.ts
+ * this file contained, curiously, tests for mocks
+*/
+describe('fetchSpecificDataResponseMock', () => {
+  it('should return specific data', () => {
+    expect(fetchSpecificDataResponseMock()).toEqual(mockData);
+  });
+  ...
+});
+
+/** api/specificApi/schema.ts
+ * this file contained the schema for the response, as well as the ajv schema key
+*/
+export const SPECIFIC_DATA_SCHEMA_KEY = 'SPECIFIC_DATA_SCHEMA_KEY';
+
+export const specificDataSchema = {
+  type: 'object',
+  properties: {
+    id: { type: 'string' },
+    name: { type: 'string' },
+  },
+  required: ['id', 'name'],
+  additionalProperties: false,
+};
+
+/**
+ * validator.ts
+ * this file contained the ajv instance
+ * which included the schema keys
+ * and the ajv instance itself
+ * */
+const ajv = new Ajv({
+  schemas: [
+    ...
+    specificDataSchema
+    ...
+  ],
+  ...
+})
+```
+
+Oof. I didn't look forward to adding the new request. What do you do here?
+
+## The wrong solution
+
+I mean - we have zod, we have react-query, or even rtk-query, since the repo was already using redux-toolkit. Throw away all of this stuff, use just all that, and be done with it, right?
+
+```tsx
+export const specificDataSchema = z.object({
+  ...
+  ...
+});
+
+export type SpecificData = z.infer<typeof specificDataSchema>;
+
+export const fetchSpecificData = async () => {
+  return fetch('/api/specificData').then((response) => specificDataSchema.parse(response));
+}
+
+export const useSpecificData = () => {
+  const query = useQuery('specificData', fetchSpecificData);
+  return query;
+}
+```
+
+Easy as pie.
+
+...right?
+
+Well, no.
+
+### First, do what you're supposed to.
+
+I've been there. My initial instinct was to refactor first, so that work is easier, and then implement the feature. Truth be told, I don't even know if at the time I remembered about the feature. Did you? I get really caught up.
+
+First, implement the feature. Then, talk about it. Then, if necessary, refactor.
+
+## Getting empathetic
+
+Get back to the beginning. Code tells as much about the skill, as it does about the team writing it. Dismissing main ideas and patterns and enforcing your own could, and more often than not, will lead to a lot of friction. Being a software developer means being a team player, and a person able to navigate the team's culture and empathize with others. So instead of jumping to the first solution that came to mind, stop. Think about it. Ask yourself - why is it like this? What's the reason? Besides the obvious - what does it tell about values of the developers behind this? Let's figure this out on this example.
+
+### The toolkit
+
+The first thing to learn here is that there are some tools being used, that the team feels comfortable with. Redux, redux-sagas, ajv, jest. All of this is useful. When refactoring, let's stick with them initially. I say initially, because refactoring is a process. Like with the initial service, it didn't die once implemented, and a refactor is a part of the service's life.
+
+So that's one thing we know, and with that, we have our first boundaries - redux, sagas, ajv, jest.
+
+### Defensiveness
+
+Validating responses. Huh. In a company where the backend is written by your own colleagues, no less. Weird.
+
+Weird or not, there used to be, or still exists a reason for such precaution. Stick with it - someone took explicit effort to implement measure such that they're even explicitly required down the line. It's important for the team, and so the refactor itself should be done with that in mind.
+
+### Coupling
+
+Good or bad, there is a lot of it. Validation is coupled with requests, all of the schemas are tied and added to the ajv instance. While usually an antipattern, we're not going to change it all at once. So here - maybe make sure to loosen the ties a little.
+
+### Frustrations
+
+There are a lot of places we're changing, adding, and 9 files to add one request is way too much, and I hope that's clear for all. Let's try in this iterations to make it just a little bit better. At least ditch the tests which test the mocks, for the love of all that's holy.
+
+## The empathic approach
+
+First thing we should do - ditch the unnecessary tests for mocks. Then, go step by step, with a proposal for each.
+
+### Proposal 1 - make validation a part of the request
+
+Documentation is great. Code that documents itself is better.
+
+```tsx
+// api/createRequest.ts
+export const createValidatedRequest = (url: string, validatorFunction: <T extends object>(response: any): T {}, options?: RequestInit) => {
+  return async (url: string, options?: RequestInit) => {
+    const response = await fetch(url, options);
+    return validatorFunction(response);
+  }
+}
+
+/** now, we have a function that ensures that the response is validated
+ * and we can use it in the request
+ * */
+export const fetchSpecificData = createValidatedRequest('/api/specificData', validateSpecificData);
+```
+
+Spread the love. While helpers existing somewhere in the code isn't always a good thing, at least we have something we can rely on. Added benefit? The `validatorFunction` isn't tied to any implementation, like ajv, which means we're free to use any validation library we want. And we can use it in other places, too.
+
+This also means that for every request using this function to be safe, we have to test two things: the `createValidatedRequest` function, and, theoretically, the `validatorFunction`. If the validator itself is trusted, we can skip the second part.
+
+### Proposal 2 - move away from central schema store
+
+Now that another place ensures the existence of a validation of a request, how about we remove another file which needs to be changed every time we add a new request? What validations there were, let them stay, but let's use something else for the new ones. Like, er, zod.
+
+```tsx
+// api/specificApi/schema.ts
+export const specificDataSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+});
+
+export type SpecificData = z.infer<typeof specificDataSchema>;
+
+// api/specificApi/index.ts
+export const fetchSpecificData = createValidatedRequest(
+  '/api/specificData',
+  specificDataSchema.parse,
+);
+```
+
+Almost one liners. Might even stick them in one file, who knows.
+
+### Proposal 3 - sagas are a bit too much
+
+...and too old. React-query is fine and all, but we're stuck with redux. Rtk-query, anyone?
+
+```tsx
+// api/specificApi/index.ts
+export const fetchSpecificData = createValidatedRequest(
+  '/api/specificData',
+  specificDataSchema.parse,
+);
+
+const specificApi = createApi({
+  baseQuery: fetchSpecificData,
+  tagTypes: ['SpecificData'],
+  endpoints: (build) => ({
+    getSpecificData: build.query<SpecificData, void>({
+      query: () => '',
+      providesTags: ['SpecificData'],
+    }),
+  }),
+});
+
+export const { useGetSpecificDataQuery } = specificApi;
+```
+
+Down to two files. Nice.
+
+# Grow for the team
+
+Note that I'm not saying that this was the best approach to this particular refactor. In fact, I'm sure it isn't.
+
+What should be important here, though, is that with exercises like these, we move away from our own ideas, and grow as developers. We learn to empathize with others, and embrace the viewpoint. We should be malleable and adaptable. There's many a way to skin a cat, and we should be able to see that.

@@ -24,7 +24,7 @@ export default function Home({ postsData }: IStaticProps) {
       <div className="grid grid-cols-5 gap-4">
         {postsData.map((post) => (
           <div
-            className="px-2 py-2 col-span-5 gap-6 rounded-md bg-slate-100 border-slate-700 border-[1px] border-opacity-10 shadow-sm grid grid-cols-7 grid-rows-6"
+            className="px-2 py-2 col-span-5 gap-6 rounded-md dark:bg-slate-700 bg-slate-100 border-slate-700 border-[1px] border-opacity-10 shadow-sm grid grid-cols-7 grid-rows-6"
             key={post.slug}
           >
             <div className="col-span-4 row-span-6 ml-2 mt-2">
